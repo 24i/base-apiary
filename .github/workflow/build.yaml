@@ -1,0 +1,11 @@
+name: apiary doc build
+on:
+  push:
+    branches: [ develop, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          docker build -t apiary-doc:latest .
+          docker push jaytaph/apiary-doc:latest
