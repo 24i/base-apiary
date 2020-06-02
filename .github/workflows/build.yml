@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          ls -la
-          docker build -t apiary_doc_base:latest .
-          docker push jaytaph/apiary_doc_base:latest
+          echo "${{ secrets.DOCKER_PASS }}" | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
+          docker build -t jaytaph/apiary-doc-base:latest .
+          docker push jaytaph/apiary-doc-base:latest
