@@ -13,7 +13,7 @@ jobs:
           aws ecr get-login --no-include-email --region eu-central-1 | awk '{print $6}' | docker login -u AWS --password-stdin $_DOCKER_REPO
 
           # Build, tag and push the image to ECR
-          docker build -t apiary-doc-base:latest -t apiary-doc-base:latest
+          docker build -t apiary-doc-base:latest -t apiary-doc-base:latest .
           docker tag apiary-doc-base:latest 236852363066.dkr.ecr.eu-central-1.amazonaws.com/apiary-doc-base:latest
           docker push 236852363066.dkr.ecr.eu-central-1.amazonaws.com/apiary-doc-base:latest
         env:
