@@ -8,6 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo "${{ secrets.DOCKER_PASS }}" | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
-          docker build -t jaytaph/apiary-doc-base:latest .
-          docker push jaytaph/apiary-doc-base:latest
+          # Log into AWS ECR docker registry
+          export _DOCKER_REPO="$(aws ecr get-authorization-token --output text  --query 'authorizationData[].proxyEndpoint')"
+          aws ecr get-login --no-include-email --region eu-central-1 | awk '{print $6}' | docker login -u AWS --password-stdin $_DOCKER_REPO
+
+          # Build, tag and push the image to ECR
+          docker build -t apiary-doc-base:latest -t apiary-doc-base:latest
+          docker tag 24i-npo-api:latest 236852363066.dkr.ecr.eu-central-1.amazonaws.com/24i-npo-api:latest
+          docker push 236852363066.dkr.ecr.eu-central-1.amazonaws.com/24i-npo-api:latest
+        env:
+          AWS_DEFAULT_REGION: eu-central-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
