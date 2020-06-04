@@ -14,8 +14,8 @@ jobs:
 
           # Build, tag and push the image to ECR
           docker build -t apiary-doc-base:latest -t apiary-doc-base:latest
-          docker tag 24i-npo-api:latest 236852363066.dkr.ecr.eu-central-1.amazonaws.com/24i-npo-api:latest
-          docker push 236852363066.dkr.ecr.eu-central-1.amazonaws.com/24i-npo-api:latest
+          docker tag apiary-doc-base:latest 236852363066.dkr.ecr.eu-central-1.amazonaws.com/apiary-doc-base:latest
+          docker push 236852363066.dkr.ecr.eu-central-1.amazonaws.com/apiary-doc-base:latest
         env:
           AWS_DEFAULT_REGION: eu-central-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
